@@ -19,6 +19,7 @@ import java.awt.event.ActionEvent;
  *
  */
 public class MyDialog extends JDialog implements ActionListener {
+	private JTextField sourceTextField;
 	JTextField t;
 	JButton b1, b2, b3, b4, b5, b6, b7, b8, b9, b0, bdiv, bmul, bsub, badd, bdec, beq, bdel, bclr;
 	static double a = 0, b = 0, result = 0;
@@ -31,7 +32,7 @@ public class MyDialog extends JDialog implements ActionListener {
 	 */
 	public static void main(String[] args) {
 		try {
-			MyDialog dialog = new MyDialog();
+			MyDialog dialog = new MyDialog(null);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -44,11 +45,13 @@ public class MyDialog extends JDialog implements ActionListener {
 	 */
 	Presserei1 father;
 
-	public MyDialog(Presserei1 father) {
+	/*public MyDialog(Presserei1 father) {
 		this.father = father;
-	}
+	}*/
 
-	public MyDialog() {
+	public MyDialog(JTextField tfSource) {
+		setModal(true);
+		this.sourceTextField = tfSource;
 
 		t = new JTextField();
 		b1 = new JButton("1");
@@ -155,8 +158,14 @@ public class MyDialog extends JDialog implements ActionListener {
 				JButton okButton = new JButton("OK");
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-			
-							father.textField_1.setText(t.getText());
+
+						/**
+						 * Made changes here
+						 */
+						if (sourceTextField != null) {
+							sourceTextField.setText(t.getText());
+							setVisible(false);
+						}
 						
 						
 						

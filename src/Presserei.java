@@ -1,58 +1,29 @@
 /**
- * 
+ * @author yotti
  */
 
 /**
  * @author yotti
  *
  */
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.BorderFactory;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.JInternalFrame;
-import javax.swing.JComboBox;
-import javax.swing.JTextPane;
 import javax.swing.border.LineBorder;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
-
-import java.awt.Color;
-import java.awt.Rectangle;
-import java.awt.TextField;
-import java.awt.Panel;
-import java.awt.Component;
-
-import javax.swing.JButton;
-
-import java.awt.event.ActionListener;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.awt.event.ActionEvent;
-
-import javax.swing.UIManager;
-
-import java.awt.Button;
-import java.awt.SystemColor;
-import java.awt.Font;
 import javax.swing.border.TitledBorder;
-import javax.swing.border.EtchedBorder;
-import java.awt.FlowLayout;
-import java.sql.*;
+
+import net.sf.jasperreports.engine.JRException;
+
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.sql.*;
 
 public class Presserei extends JFrame {
-
+	private double str;
 	private JPanel contentPane;
 	JTextField textFied_ArbeitsplanNr;
 	JTextField textField_KommmissionNr;
@@ -79,6 +50,9 @@ public class Presserei extends JFrame {
 	private JPanel panel_3;
 	private JTable table;
 	public JTextField textField_11;
+	public static String username;
+	private JButton btnNewButton_2;
+	private JButton btnNewButton_3;
 
 	/**
 	 * Launch the application.
@@ -87,7 +61,7 @@ public class Presserei extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Presserei frame = new Presserei();
+					Presserei frame = new Presserei(new Presserei1Data(), username);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -98,46 +72,46 @@ public class Presserei extends JFrame {
 
 	/**
 	 * Create the frame.
-	 * 
+	 *
 	 * @throws SQLException
 	 */
-	public Presserei(String s) {
-		this.textField_11.setText(s);
-	}
-
-	public Presserei() throws SQLException {
-
+	public Presserei(Presserei1Data data, String username) throws SQLException {
+		Table table = new Table(username);
+		this.username = username;
 		String sql = "";
 		String ID = "", ID1 = "";
-		Presserei1 qt = new Presserei1();
+		// Presserei1 qt = new Presserei1();
 		textField_11 = new JTextField();
-		textField_11.setText(qt.textField.getText());
-		String d = textField_11.getText();
-		System.out.println("dd" + d);
-		try {
-			Class.forName("oracle.jdbc.driver.OracleDriver");
-			Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@192.168.0.25:1521:demo12", "atlantic",
-					"Abc#123");
-			Statement stmt = conn.createStatement();
-			// String sql = "SELECT ENAME,EMPNO FROM emp";
-			sql = "SELECT * FROM emp";
-			ResultSet rset = stmt.executeQuery(sql);
+		// textField_11.setText(qt.textField.getText());
+		// String d = textField_11.getText();
+		// System.out.println("dd" + d);
+		// try {
+		// Class.forName("oracle.jdbc.driver.OracleDriver");
+		// Connection conn =
+		// DriverManager.getConnection("jdbc:oracle:thin:@192.168.0.25:1521:demo12",
+		// "atlantic","Abc#123");
+		// Statement stmt = conn.createStatement();
+		// // String sql = "SELECT ENAME,EMPNO FROM emp";
+		// sql = "SELECT * FROM emp where empno=793";
+		// ResultSet rset = stmt.executeQuery(sql);
+		//
+		// while (rset.next()) {
+		// System.out.println(rset.getString(1) + " " + rset.getString(2) + " "
+		// + rset.getString(3) + " "
+		// + rset.getString(4) + " " + rset.getString(5) + " " +
+		// rset.getString(6));
+		//
+		// ID = rset.getString(1);
+		// ID1 = rset.getString(2);
+		//
+		// }
+		// stmt.close();
+		// conn.close(); // Close
+		// } catch (Exception e) {
+		// System.out.println(e);
+		// }
 
-			while (rset.next()) {
-				System.out.println(rset.getString(1) + "   " + rset.getString(2) + "  " + rset.getString(3) + "   "
-						+ rset.getString(4) + "  " + rset.getString(5) + "   " + rset.getString(6));
-
-				ID = rset.getString(1);
-				ID1 = rset.getString(2);
-
-			}
-			stmt.close();
-			conn.close(); // Close
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-
-		setMaximizedBounds(new Rectangle(1, 1, 0, 0));
+		// setMaximizedBounds(new Rectangle(1, 1, 0, 0));
 		setBounds(new Rectangle(2, 0, 0, 0));
 		setTitle("Presserei");
 		setBounds(100, 100, 1024, 768);
@@ -148,10 +122,10 @@ public class Presserei extends JFrame {
 		contentPane.setLayout(null);
 
 		textFied_ArbeitsplanNr = new JTextField();
-		textFied_ArbeitsplanNr.setEnabled(false);
-		// textFied_ArbeitsplanNr.setText(ID);
-		// textFied_ArbeitsplanNr.setText(ID);
-		textFied_ArbeitsplanNr.getText();
+		textFied_ArbeitsplanNr.setFont(new Font("Lucida Grande", Font.BOLD, 18));
+		textFied_ArbeitsplanNr.setEditable(false);
+
+		textFied_ArbeitsplanNr.setText(doubleToString(data.getArbeitSplanNr()));
 		textFied_ArbeitsplanNr.setBounds(10, 36, 116, 32);
 		contentPane.add(textFied_ArbeitsplanNr);
 		textFied_ArbeitsplanNr.setColumns(10);
@@ -161,8 +135,11 @@ public class Presserei extends JFrame {
 		contentPane.add(lblNewLabel);
 
 		textField_KommmissionNr = new JTextField();
-		textField_KommmissionNr.setEnabled(false);
+		textField_KommmissionNr.setFont(new Font("Lucida Grande", Font.BOLD, 18));
+		textField_KommmissionNr.setEditable(false);
 		// textField_KommmissionNr.setText(ID1);
+
+		textField_KommmissionNr.setText(table.getKomm());
 		textField_KommmissionNr.getText();
 		textField_KommmissionNr.setColumns(10);
 		textField_KommmissionNr.setBounds(172, 36, 116, 32);
@@ -173,29 +150,33 @@ public class Presserei extends JFrame {
 		contentPane.add(lblKommnr);
 
 		textField_Position = new JTextField();
-		textField_Position.setEnabled(false);
-		textField_Position.setText("aa");
+		textField_Position.setFont(new Font("Lucida Grande", Font.BOLD, 18));
+		textField_Position.setEditable(false);
+
+		textField_Position.setText(table.getPosition());
 		textField_Position.setColumns(10);
 		textField_Position.setBounds(324, 36, 116, 32);
 		contentPane.add(textField_Position);
 
 		textField_Strich = new JTextField();
-		textField_Strich.setEnabled(false);
-		textField_Strich.setText("aa");
+		textField_Strich.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
+		textField_Strich.setEditable(false);
+		textField_Strich.setText(table.getStrich());
 		textField_Strich.setColumns(10);
 		textField_Strich.setBounds(477, 36, 116, 32);
 		contentPane.add(textField_Strich);
 
 		textField_Kunde = new JTextField();
-		textField_Kunde.setEnabled(false);
-		textField_Kunde.setText("aa");
+		textField_Kunde.setFont(new Font("Lucida Grande", Font.BOLD, 18));
+		textField_Kunde.setEditable(false);
+		textField_Kunde.setText(table.getKunde());
 		textField_Kunde.setColumns(10);
 		textField_Kunde.setBounds(625, 36, 116, 32);
 		contentPane.add(textField_Kunde);
 
 		textField_St_ck = new JTextField();
-		textField_St_ck.setEnabled(false);
-		textField_St_ck.setText("aa");
+		textField_St_ck.setFont(new Font("Lucida Grande", Font.BOLD, 18));
+		textField_St_ck.setText(table.getStueck());
 		textField_St_ck.setColumns(10);
 		textField_St_ck.setBounds(783, 36, 116, 32);
 		contentPane.add(textField_St_ck);
@@ -219,7 +200,7 @@ public class Presserei extends JFrame {
 		JPanel panel = new JPanel();
 		panel.setBorder(new LineBorder(new Color(0, 0, 0), 3));
 		panel.setBackground(Color.WHITE);
-		panel.setBounds(10, 86, 955, 379);
+		panel.setBounds(10, 86, 955, 310);
 		contentPane.add(panel);
 		panel.setLayout(null);
 
@@ -344,34 +325,82 @@ public class Presserei extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnNewButton.setBounds(769, 529, 117, 38);
+		btnNewButton.setBounds(799, 418, 146, 59);
 		contentPane.add(btnNewButton);
 
 		JButton btnNewButton_1 = new JButton("Speichern");
-		btnNewButton_1.setBackground(Color.LIGHT_GRAY);
-		btnNewButton_1.setBounds(769, 590, 117, 38);
+		btnNewButton_1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				String value = comboBox.getSelectedItem().toString();
+				table.insertData(textField_3.getText(), textField_7.getText(), textField_8.getText(),
+						textField_9.getText(), textField_10.getText(), value, textField_4.getText(),
+						textField_6.getText(), textField_5.getText(), textField_St_ck.getText(), pm.getDP1(),
+						pm.getBP1(), pm.getBOP1());
+				table.refreshTable();
+			}
+		});
+		// btnNewButton_1.setBackground(Color.LIGHT_GRAY);
+		btnNewButton_1.setBounds(799, 490, 146, 59);
 		contentPane.add(btnNewButton_1);
 
-		/*
-		 * table = new JTable(); table.setBounds(122, 23, 139, 14);
-		 * panel_3.add(table);
-		 */
-
-		Table t = new Table();
-		// t.setBounds(8, 500, 800, 150);
-		JScrollPane js = new JScrollPane(t);
-		js.setBounds(8, 500, 644, 202);
+		table.setBounds(8, 400, 700, 300);
+		JScrollPane js = new JScrollPane(table);
+		js.setBounds(8, 400, 700, 300);
 		js.setVisible(true);
+		js.getVerticalScrollBar().setVisible(false);
+		UIManager.put("js.width", new Integer(50));
+		js.setPreferredSize(new Dimension(400, 400));
 		getContentPane().add(js);
-
 		textField_11 = new JTextField();
 		// textField_11.setBounds(863, 489, 134, 28);
-		textField_11.setText("793");
+		textField_11.setText("710");
 		System.out.println("wert von textField_11 ist" + textField_11.getText());
 		contentPane.add(textField_11);
 		textField_11.setColumns(10);
 
+		btnNewButton_2 = new JButton("drücken");
+		btnNewButton_2.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				Jasperreport j = new Jasperreport();
+//				SwingEmailSender s = new SwingEmailSender();
+//				s.setVisible(true);
+			}
+		});
+		btnNewButton_2.setBounds(799, 566, 146, 55);
+		contentPane.add(btnNewButton_2);
+		
+		btnNewButton_3 = new JButton("Send Email");
+		btnNewButton_3.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				SwingEmailSender s = new SwingEmailSender();
+			s.setVisible(true);
+			}
+		});
+		btnNewButton_3.setBounds(799, 639, 146, 49);
+		contentPane.add(btnNewButton_3);
+
 		// Statement stmt = null;
 
 	}
+
+	private String doubleToString(double val) {
+		return Double.toString(val);
+	}
+
+	private double getValue(JTextField textField) {
+
+		return Double.valueOf(textField.getText());
+	}
+
+	public double gettextFied_ArbeitsplanNr() {
+		return str;
+	}
+
+	public void settextFied_ArbeitsplanNr(double str) {
+		this.str = str;
+	}
+
 }

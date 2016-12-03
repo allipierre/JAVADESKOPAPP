@@ -40,6 +40,8 @@ import java.awt.Font;
 import javax.swing.border.TitledBorder;
 import javax.swing.border.EtchedBorder;
 import java.awt.FlowLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 
 
@@ -50,6 +52,7 @@ public class Pressmasse extends JPanel {
 	private JTextField textField_1;
 	private JTextField textField_2;
 	private JTextField textField_4;
+	Pressmasse_Modell tm = new Pressmasse_Modell();
 	/**
 	 * Create the panel.
 	 */
@@ -62,6 +65,13 @@ public class Pressmasse extends JPanel {
 		
 
 		textField = new JTextField();
+		textField.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				MyDialog m=new MyDialog(textField);
+				m.setVisible(true);
+			}
+		});
 		textField.setBounds(6, 45, 116, 32);
 		textField.setAlignmentY(Component.BOTTOM_ALIGNMENT);
 		textField.setAlignmentX(10.0f);
@@ -93,6 +103,18 @@ public class Pressmasse extends JPanel {
 		lblBop.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		add(lblBop);
 
+	}
+	
+	public String getDP1() {
+		return textField_1.getText();
+	}
+	
+	public String getBP1() {
+		return textField.getText();
+	}
+	
+	public String getBOP1() {
+		return textField_2.getText();
 	}
 
 }

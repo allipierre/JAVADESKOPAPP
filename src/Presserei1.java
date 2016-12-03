@@ -1,40 +1,28 @@
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-import java.awt.Window;
-import java.awt.Dialog.ModalityType;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JButton;
-import javax.swing.JDialog;
+import javax.swing.border.TitledBorder;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import com.itextpdf.text.log.SysoLogger;
+
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
-import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-
-import java.awt.Color;
-import javax.swing.border.TitledBorder;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 /**
- * 
+ *
  */
 
 /**
  * @author yotti
- *
  */
 public class Presserei1 extends JFrame {
-	
-	 private Dialog dialogPanel = new Dialog();
-	 private JDialog dialog;
-	public  Object object;
+
+	private Dialog dialogPanel = new Dialog();
+	private JDialog dialog;
+	public Object object;
 	public int tz;
 
 	private JPanel contentPane;
@@ -51,11 +39,13 @@ public class Presserei1 extends JFrame {
 	 */
 
 	private static void createAndShowUIE() {
+
 		try {
+
 			Presserei1 frame = new Presserei1();
-			//frame.pack();
-			//frame.setLocationRelativeTo(null);
-			frame.setVisible(true);
+			// frame.pack();
+			// frame.setLocationRelativeTo(null);
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -65,11 +55,12 @@ public class Presserei1 extends JFrame {
 
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
+				// new Splashscreen();
 				createAndShowUIE();
+
 			}
 		});
-		
-		
+
 	}
 
 	/**
@@ -99,7 +90,7 @@ public class Presserei1 extends JFrame {
 		textField.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				MyDialog m=new MyDialog();
+				MyDialog m = new MyDialog(textField);
 				m.setVisible(true);
 			}
 		});
@@ -118,19 +109,17 @@ public class Presserei1 extends JFrame {
 		textField_1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				 object = e.getX();
-				 tz=e.getX();
+				object = e.getX();
+				tz = e.getX();
 				System.out.println(e.getX());
-				System.out.println("a"+tz);
-				MyDialog m=new MyDialog();
+				System.out.println("a" + tz);
+				MyDialog m = new MyDialog(textField_1);
 				m.setVisible(true);
 			}
 		});
 		textField_1.setEditable(false);
 		textField_1.setFocusable(false);
-		
-		
-		
+
 		// textField_1=JOptionPane.showInputDialog(null, "message");
 
 		JLabel lblKomm = new JLabel("Komm.-Nr");
@@ -141,6 +130,16 @@ public class Presserei1 extends JFrame {
 		textField_2.setBounds(320, 62, 116, 32);
 		panel.add(textField_2);
 		textField_2.setColumns(10);
+		/**
+		 * You missed this. MouseListener was not set
+		 */
+		textField_2.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				MyDialog m = new MyDialog(textField_2);
+				m.setVisible(true);
+			}
+		});
 
 		JLabel lblPos = new JLabel("Pos.");
 		lblPos.setBounds(353, 34, 61, 16);
@@ -151,6 +150,17 @@ public class Presserei1 extends JFrame {
 		panel.add(textField_3);
 		textField_3.setColumns(10);
 
+		/**
+		 * And this too...
+		 */
+		textField_3.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				MyDialog m = new MyDialog(textField_3);
+				m.setVisible(true);
+			}
+		});
+
 		JLabel lblStr = new JLabel("Str.");
 		lblStr.setBounds(28, 140, 61, 16);
 		panel.add(lblStr);
@@ -159,6 +169,17 @@ public class Presserei1 extends JFrame {
 		textField_4.setBounds(177, 168, 116, 32);
 		panel.add(textField_4);
 		textField_4.setColumns(10);
+
+		/**
+		 * This .....
+		 */
+		textField_4.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				MyDialog m = new MyDialog(textField_4);
+				m.setVisible(true);
+			}
+		});
 
 		JLabel lblKunde = new JLabel("Kunde");
 		lblKunde.setBounds(231, 140, 61, 16);
@@ -169,6 +190,17 @@ public class Presserei1 extends JFrame {
 		panel.add(textField_5);
 		textField_5.setColumns(10);
 
+		/**
+		 * Lastly ....
+		 */
+		textField_5.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				MyDialog m = new MyDialog(textField_5);
+				m.setVisible(true);
+			}
+		});
+
 		JLabel lblStck = new JLabel("Stück");
 		lblStck.setBounds(353, 151, 61, 16);
 		panel.add(lblStck);
@@ -176,28 +208,67 @@ public class Presserei1 extends JFrame {
 		JButton btnNewButton = new JButton("Weiter");
 		btnNewButton.setBounds(613, 113, 117, 38);
 		panel.add(btnNewButton);
+
+		JComboBox comboBox = new JComboBox();
+		setDiscountNames s = new setDiscountNames(comboBox);
+		comboBox.setBounds(70, 277, 139, 27);
+		panel.add(comboBox);
+		System.out.println(getValue(textField));
+		JButton btnZurck = new JButton("Zurück");
+		btnZurck.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Startpage s = new Startpage();
+				s.frmAngebotsportal.setVisible(true);
+				setVisible(false);
+			}
+		});
+		btnZurck.setBounds(613, 171, 117, 38);
+		panel.add(btnZurck);
 		btnNewButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 
 				try {
-					// this.setVisible(false);
+					if (getValue(textField) > 0) {
 
-					Presserei pr = new Presserei();
-					pr.setVisible(true);
-					setVisible(false);
-					pr.textField_KommmissionNr.setText(getKommission().getText());
-					pr.textFied_ArbeitsplanNr.setText(getUsername().getText());
-					// Presserei pra = new Presserei(getUsername());
+						// this.setVisible(false);
+						/**
+						 * You need to set the data from this frame to this
+						 * model
+						 */
+						Presserei1Data data = new Presserei1Data();
+						data.setArbeitSplanNr(getValue(textField));
+						// data.setKommNr(getValue(textField_1));
+						// data.setPos(getValue(textField_2));
+						// data.setStr(getValue(textField_3));
+						// data.setKunde(getValue(textField_4));
+						// data.setStuck(getValue(textField_5));
+
+						Presserei pr = new Presserei(data, getUsername().getText());
+
+						pr.setVisible(true);
+						setVisible(false);
+						// pr.textField_KommmissionNr.setText(getKommission().getText());
+						// pr.textFied_ArbeitsplanNr.setText(getUsername().getText());
+						System.out.println("stop" + getUsername().getText());
+						Table table = new Table(getUsername().getText());
+
+						// Presserei pra = new Presserei(getUsername());
+					} else {
+
+						JDialog.setDefaultLookAndFeelDecorated(true);
+						int response = JOptionPane.showConfirmDialog(null, "Sie müssen Eine ArbeitsplatzNr geben!",
+								"Confirm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+					}
 
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
+					JOptionPane.showMessageDialog(null, "Sie müssen eine Wahl treffen!");
 				}
 			}
 		});
-		
-		
+
 	}
 
 	public JTextField getUsername() {
@@ -206,21 +277,25 @@ public class Presserei1 extends JFrame {
 		return textField;
 	}
 
-	 private void openTableAction() {
-	      
-	      dialogPanel.setVisible(true); // here the modal dialog takes over
+	private void openTableAction() {
 
-	      // this line starts *after* the modal dialog has been disposed
-	      // **** here's the key where I get the String from JTextField in the GUI held
-	      // by the JDialog and put it into this GUI's JTextField.
-	      textField_1.setText(dialogPanel.getFieldText());
-	   }
-	
+		dialogPanel.setVisible(true); // here the modal dialog takes over
+
+		// this line starts *after* the modal dialog has been disposed
+		// **** here's the key where I get the String from JTextField in the GUI
+		// held
+		// by the JDialog and put it into this GUI's JTextField.
+		textField_1.setText(dialogPanel.getFieldText());
+	}
 
 	public JTextField getKommission() {
 		return textField_1;
 	}
-	
-	
 
+	private double getValue(JTextField textField) {
+		if (textField.getText() == null || textField.getText().isEmpty()) {
+			return 0;
+		}
+		return Double.valueOf(textField.getText());
+	}
 }
